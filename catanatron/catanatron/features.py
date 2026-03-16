@@ -134,7 +134,9 @@ def map_tile_features(catan_map: CatanMap, robber_coordinate):
             features[f"TILE{tile_id}_IS_{resource}"] = tile.resource == resource
         features[f"TILE{tile_id}_IS_DESERT"] = tile.resource == None
         features[f"TILE{tile_id}_PROBA"] = (
-            0 if tile.resource is None else number_probability(tile.number)
+            0
+            if tile.resource is None
+            else tile.number  # number_probability(tile.number)
         )
         features[f"TILE{tile_id}_HAS_ROBBER"] = (
             catan_map.tiles[robber_coordinate] == tile
@@ -486,6 +488,11 @@ def game_features(game: Game, p0_color: Color):
         features[f"BANK_{resource}"] = freqdeck_count(
             game.state.resource_freqdeck, resource
         )
+    features["DICE"] = (
+        game.state.last_roll[0] + game.state.last_roll[1]
+        if game.state.last_roll is not None
+        else 0
+    )
     return features
 
 

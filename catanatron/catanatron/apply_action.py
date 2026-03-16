@@ -263,6 +263,7 @@ def apply_roll(state: State, action: Action, action_record=None):
 
     dices = action_record.result if action_record is not None else roll_dice()
     number = dices[0] + dices[1]
+    state.last_roll = dices
     action = Action(action.color, action.action_type, dices)
 
     if number == 7:

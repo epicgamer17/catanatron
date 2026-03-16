@@ -129,6 +129,7 @@ class State:
             self.is_moving_knight = False
             self.is_road_building = False
             self.free_roads_available = 0
+            self.last_roll = None
 
             self.is_resolving_trade = False
             self.current_trade: Tuple = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -179,6 +180,7 @@ class State:
         state_copy.is_moving_knight = self.is_moving_knight
         state_copy.is_road_building = self.is_road_building
         state_copy.free_roads_available = self.free_roads_available
+        state_copy.last_roll = self.last_roll
 
         state_copy.is_resolving_trade = self.is_resolving_trade
         state_copy.current_trade = self.current_trade
