@@ -88,6 +88,7 @@ class State:
         players: Sequence[Player],
         catan_map=None,
         discard_limit=7,
+        vps_to_win=10,
         initialize=True,
         restrict_dice_to_board=False,
     ):
