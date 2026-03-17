@@ -157,6 +157,7 @@ class State:
         state_copy = State([], None, initialize=False)
         state_copy.players = self.players
         state_copy.discard_limit = self.discard_limit  # immutable
+        state_copy.vps_to_win = self.vps_to_win
 
         state_copy.board = self.board.copy()
 
