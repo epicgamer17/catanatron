@@ -89,12 +89,15 @@ class State:
         catan_map=None,
         discard_limit=7,
         initialize=True,
+        restrict_dice_to_board=False,
     ):
         if initialize:
             self.players = random.sample(players, len(players))
             self.colors = tuple([player.color for player in self.players])
             self.board = Board(catan_map or CatanMap.from_template(BASE_MAP_TEMPLATE))
             self.discard_limit = discard_limit
+            self.vps_to_win = vps_to_win
+            self.restrict_dice_to_board = restrict_dice_to_board
 
             # feature-ready dictionary
             self.player_state = dict()
@@ -129,6 +132,7 @@ class State:
             self.is_moving_knight = False
             self.is_road_building = False
             self.free_roads_available = 0
+            self.last_roll = None
 
             self.is_resolving_trade = False
             self.current_trade: Tuple = (0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
@@ -179,9 +183,11 @@ class State:
         state_copy.is_moving_knight = self.is_moving_knight
         state_copy.is_road_building = self.is_road_building
         state_copy.free_roads_available = self.free_roads_available
+        state_copy.last_roll = self.last_roll
 
         state_copy.is_resolving_trade = self.is_resolving_trade
         state_copy.current_trade = self.current_trade
         state_copy.acceptees = self.acceptees
 
+        state_copy.restrict_dice_to_board = self.restrict_dice_to_board
         return state_copy

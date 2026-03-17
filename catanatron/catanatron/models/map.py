@@ -191,6 +191,22 @@ BASE_MAP_TEMPLATE = MapTemplate(
     },
 )
 
+BANDIT_MAP_TEMPLATE = MapTemplate(
+    # Numbers for the 6 islands, plus 'None' for the desert
+    numbers=[2, 3, 4, 5, 6, 8],
+    port_resources=[], 
+    # 6 Ores, plus 1 None (Desert)
+    tile_resources=[ORE, ORE, ORE, ORE, ORE, ORE, None], 
+    topology={
+        (0, 0, 0): LandTile,     # Island 1 (2)
+        (5, 0, -5): LandTile,    # Island 2 (3)
+        (10, 0, -10): LandTile,  # Island 3 (4)
+        (15, 0, -15): LandTile,  # Island 4 (5)
+        (20, 0, -20): LandTile,  # Island 5 (6)
+        (25, 0, -25): LandTile,  # Island 6 (8)
+        (30, 0, -30): LandTile,  # Island 7 (Desert/Robber Home)
+    }
+)
 
 class CatanMap:
     """Represents a randomly initialized map."""
@@ -243,8 +259,16 @@ class CatanMap:
             t.id: t for t in self.tiles.values() if isinstance(t, LandTile)
         }
         self.ports_by_id = {p.id: p for p in self.tiles.values() if isinstance(p, Port)}
-
         return self
+
+    @property
+    def land_tile_numbers(self) -> Set[int]:
+        """Returns set of all numbers present on land tiles (excludes None/Desert)"""
+        return set(
+            tile.number
+            for tile in self.land_tiles.values()
+            if tile.number is not None
+        )
 
 
 def init_port_nodes_cache(
