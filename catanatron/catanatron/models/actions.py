@@ -39,6 +39,7 @@ from catanatron.state_functions import (
     player_key,
     player_num_resource_cards,
     player_resource_freqdeck_contains,
+    get_actual_victory_points,
 )
 
 
